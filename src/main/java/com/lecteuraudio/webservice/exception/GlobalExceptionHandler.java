@@ -26,4 +26,12 @@ public class GlobalExceptionHandler
     public String handleIllegalArgumentException(IllegalArgumentException e) {
         return e.getMessage();
     }
+
+    @ExceptionHandler(Conflict.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String AlreadyExistException(
+            Conflict conflict) {
+        return conflict.getMessage();
+    }
 }

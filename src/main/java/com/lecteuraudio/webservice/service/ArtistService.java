@@ -1,5 +1,6 @@
 package com.lecteuraudio.webservice.service;
 
+import com.lecteuraudio.webservice.exception.Conflict;
 import com.lecteuraudio.webservice.model.Artist;
 import com.lecteuraudio.webservice.repository.ArtistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class ArtistService {
     }
 
     public List<Artist> findArtistByName (String name) throws Exception {
-        List<Artist> artist = artistRepository.findByNameLike(name);
+        List<Artist> artist = artistRepository.findByNameContaining(name);
         return artist;
     }
 
@@ -35,11 +36,15 @@ public class ArtistService {
         return artistRepository.findAll(pageRequest);
     }
 
-    public Artist saveArtist(Artist artist){
-        return artistRepository.save(artist);
+    public Artist saveArtist(Artist a) {
+        if(artistRepository.findByNameLike(a.getName()).size()==0) {
+            return artistRepository.save(a);
+        }else{
+            throw new Conflict("l'artist : " + a.getName() + " existe deja.");
+        }
     }
 
-    public Artist updateArtist(Integer artistId, Artist artist){
+    public Artist updateArtist(Integer artistId, Artist artist) {
         return artistRepository.save(artist);
     }
 

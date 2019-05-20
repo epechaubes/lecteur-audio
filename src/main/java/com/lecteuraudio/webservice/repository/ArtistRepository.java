@@ -9,8 +9,9 @@ import java.util.List;
 
 public interface ArtistRepository extends JpaRepository<Artist, Integer> {
 
-    List<Artist> findByNameLike (String name);
+    List<Artist> findByNameContaining (String name);
 
     Page<Artist> findAll(Pageable pageable);
 
+    List<Artist> findByNameLike (String name);
 }

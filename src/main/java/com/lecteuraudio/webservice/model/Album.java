@@ -10,7 +10,7 @@ public class Album {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "AlbumId")
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "Title")
